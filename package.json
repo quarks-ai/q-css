@@ -1,12 +1,12 @@
 {
-  "name": "q_css",
+  "name": "quarks_css",
   "version": "0.0.1",
   "author": "@ak",
   "license": "MIT",
   "description": "another styled library",
-  "main": "dist/q_css.es.js",
-  "module": "dist/q_css.es.js",
-  "types": "./src/q_css.d.ts",
+  "main": "dist/quarks_css.es.js",
+  "module": "dist/quarks_css.es.js",
+  "types": "./src/quarks_css.d.ts",
   "scripts": {
     "build": "tsc && vite build",
     "build:watch": "vite build --watch"
