@@ -2,9 +2,10 @@ import React, { forwardRef, useRef } from "react";
 import { useGesture } from "@use-gesture/react";
 
 import mergeRefs from "../utils/refs";
-import { useAnime } from "../hooks/anime";
 import useProximtiyFeedback from "../hooks/proximity";
-import { DEFAULT_ANIMATION } from "../utils/defaults";
+
+// import { useAnime } from "../hooks/anime";
+// import { DEFAULT_ANIMATION } from "../utils/defaults";
 
 const AnimatedC = forwardRef(
 	(
@@ -32,12 +33,11 @@ const AnimatedC = forwardRef(
 
 		const ref = mergeRefs(forwardedRef, animeRef);
 
-		const api: any = useAnime(animeRef, {
-			...DEFAULT_ANIMATION,
-			...defaults,
-		});
+		// const api: any = useAnime(animeRef, {
+		// 	...DEFAULT_ANIMATION,
+		// 	...defaults,
+		// });
 
-		// distance, proximity, isNearby, pos
 		useProximtiyFeedback({
 			ref: animeRef,
 			threshold: proximity?.threshold || 250,
@@ -61,7 +61,7 @@ const AnimatedC = forwardRef(
 						.map((k: any) => {
 							return {
 								[k]: events[k](
-									api,
+									null,
 									{ ...props, onMouseUp, onMouseDown, onBlur, onFocus },
 									animeRef
 								),

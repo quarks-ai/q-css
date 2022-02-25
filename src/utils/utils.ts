@@ -1,4 +1,4 @@
-import anime from "../anime";
+// import anime from "../anime";
 
 import {
 	DEFAULT_ANIMATION,
@@ -251,7 +251,7 @@ export function setValueByKey(d: any, key: string, val: any) {
 }
 
 function getTargets(ref: any, key: string) {
-	const refs = ref.current.querySelectorAll(key);
+	const refs = ref?.current?.querySelectorAll(key) || [];
 	return refs?.length > 0 ? refs : document.querySelectorAll(key);
 }
 
@@ -268,26 +268,26 @@ function callCallback(
 	off: boolean = false,
 	defaultState: any = {}
 ) {
-	api.current.to(
-		getDefaultEventsProps(
-			props[`&:${key}${off ? ":off" : ""}`] || defaultState || {},
-			themeMap
-		)(componentProps, event, t) || {}
-	);
+	// api?.current?.to(
+	//   getDefaultEventsProps(
+	//     props[`&:${key}${off ? ":off" : ""}`] || defaultState || {},
+	//     themeMap
+	//   )(componentProps, event, t) || {}
+	// )
 
 	targets.forEach((target: any) => {
 		const targetKey = `&:${key}${off ? ":off" : ""} ${target}`;
 
-		if (props[targetKey]) {
-			anime({
-				targets: getTargets(ref, target),
-				...DEFAULT_ANIMATION,
-				...(getDefaultEventsProps(
-					props[targetKey] || defaultState || {},
-					themeMap
-				)(componentProps, event, t) || {}),
-			}).play();
-		}
+		// if (props[targetKey]) {
+		// 	anime({
+		// 		targets: getTargets(ref, target),
+		// 		...DEFAULT_ANIMATION,
+		// 		...(getDefaultEventsProps(
+		// 			props[targetKey] || defaultState || {},
+		// 			themeMap
+		// 		)(componentProps, event, t) || {}),
+		// 	}).play();
+		// }
 	});
 }
 
@@ -341,42 +341,42 @@ function getEvent(
 		const ev = EVENTS[`&:${key}`];
 		events[ev.on] =
 			(api: any, componentProps: any, ref: any) => (event: any) => {
-				if (api.current && ref.current) {
-					callCallback(
-						key,
-						api,
-						event,
-						t,
-						componentProps,
-						props,
-						targets,
-						themeMap,
-						ref,
-						ev.haveActiveProp && !event?.active,
-						defaultState[`&:${key}`]
-					);
-				}
+				// if (api.current && ref.current) {
+				//   callCallback(
+				//     key,
+				//     api,
+				//     event,
+				//     t,
+				//     componentProps,
+				//     props,
+				//     targets,
+				//     themeMap,
+				//     ref,
+				//     ev.haveActiveProp && !event?.active,
+				//     defaultState[`&:${key}`]
+				//   )
+				// }
 				componentProps[ev.on]?.(event);
 			};
 
 		if (ev.off) {
 			events[ev.off] =
 				(api: any, componentProps: any, ref: any) => (event: any) => {
-					if (api.current && ref.current) {
-						callCallback(
-							key,
-							api,
-							event,
-							t,
-							componentProps,
-							props,
-							targets,
-							themeMap,
-							ref,
-							true,
-							defaultState[`&:${key}`]
-						);
-					}
+					// if (api.current && ref.current) {
+					//   callCallback(
+					//     key,
+					//     api,
+					//     event,
+					//     t,
+					//     componentProps,
+					//     props,
+					//     targets,
+					//     themeMap,
+					//     ref,
+					//     true,
+					//     defaultState[`&:${key}`]
+					//   )
+					// }
 					componentProps[ev.off]?.(event);
 				};
 		}
@@ -465,7 +465,7 @@ function getAttributeEvent(compiled: any, key: string) {
 	if (filtered.length > 0) {
 		events[ev.on] =
 			(api: any, componentProps: any, ref: any) => (event: any) => {
-				if (api?.current && ref?.current && !componentProps.disabled) {
+				if (ref?.current && !componentProps.disabled) {
 					if ((event?.active && !ev?.off) || ev?.off) {
 						if (!ref.current.hasAttribute(key)) {
 							ref.current.setAttribute(key, "true");
@@ -484,13 +484,14 @@ function getAttributeEvent(compiled: any, key: string) {
 						}
 					}
 				}
-				componentProps[ev.on]?.(event);
+
+				ev.on in componentProps && componentProps[ev.on]?.(event);
 			};
 
 		if (ev.off) {
 			events[ev.off] =
 				(api: any, componentProps: any, ref: any) => (event: any) => {
-					if (api.current && ref.current && !componentProps.disabled) {
+					if (ref.current && !componentProps.disabled) {
 						if (!ref.current.hasAttribute(`${key}-off`)) {
 							ref.current.setAttribute(`${key}-off`, true);
 						}
