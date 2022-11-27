@@ -76,10 +76,8 @@ function createStyledFunction(css: any, animated: boolean = false) {
         }
 
         if (cssComponent.willAnimate) {
-          console.log("animated")
           return React.createElement(AnimatedContainer, forwardProps)
         } else {
-          console.log("default")
           return React.createElement(Type, forwardProps)
         }
       })

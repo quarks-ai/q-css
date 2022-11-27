@@ -972,10 +972,8 @@ function createStyledFunction(css, animated = false) {
           delete forwardProps.ignore;
         }
         if (cssComponent.willAnimate) {
-          console.log("animated");
           return React.createElement(AnimatedC, forwardProps);
         } else {
-          console.log("default");
           return React.createElement(Type, forwardProps);
         }
       });
